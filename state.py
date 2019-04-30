@@ -11,6 +11,3 @@ class State:
 
     def generateID(self):
         return 0
-
-
-print(BLACKCELL)
