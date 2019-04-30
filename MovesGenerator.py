@@ -21,198 +21,346 @@ class MovesGenerator:
                     continue
 
                 # to right
-                stateTemp = self.movesRight(state, r, c)
-                if(stateTemp != None):
-                    states.append(stateTemp)
+                stateTemp = self.movesRight(state, r, c, state.whoDidThis)
+                if(stateTemp == None):
+                    stateTemp = state
 
                 # to left
-                stateTemp = self.movesLeft(state, r, c)
-                if(stateTemp != None):
-                    states.append(stateTemp)
+                stateTemp1 = self.movesLeft(stateTemp, r, c, state.whoDidThis)
+                if(stateTemp1 == None):
+                    stateTemp1 = stateTemp
 
                 # to bottom
-                stateTemp = self.movesBottom(state, r, c)
-                if(stateTemp != None):
-                    states.append(stateTemp)
+                stateTemp = self.movesBottom(
+                    stateTemp1, r, c, state.whoDidThis)
+                if(stateTemp == None):
+                    stateTemp = stateTemp1
+
 
                 # to top
-                stateTemp = self.movesTop(state, r, c)
-                if(stateTemp != None):
-                    states.append(stateTemp)
+                stateTemp1 = self.movesTop(stateTemp, r, c, state.whoDidThis)
+                if(stateTemp1 == None):
+                    stateTemp1 = stateTemp
 
                 # to top left
-                stateTemp = self.movesTopLeft(state, r, c)
-                if(stateTemp != None):
-                    states.append(stateTemp)
+                stateTemp = self.movesTopLeft(stateTemp1, r, c, state.whoDidThis)
+                if(stateTemp == None):
+                    stateTemp = stateTemp1
 
                 # to top right
-                stateTemp = self.movesTopRight(state, r, c)
-                if(stateTemp != None):
-                    states.append(stateTemp)
+                stateTemp1 = self.movesTopRight(stateTemp, r, c, state.whoDidThis)
+                if(stateTemp1 == None):
+                    stateTemp1 = stateTemp
 
                 # to bottom left
-                stateTemp = self.movesBottomLeft(state, r, c)
-                if(stateTemp != None):
-                    states.append(stateTemp)
+                stateTemp = self.movesBottomLeft(stateTemp1, r, c, state.whoDidThis)
+                if(stateTemp == None):
+                    stateTemp = stateTemp1
 
                 # to bottom right
-                stateTemp = self.movesBottomRight(state, r, c)
-                if(stateTemp != None):
-                    states.append(stateTemp)
+                stateTemp1 = self.movesBottomRight(stateTemp, r, c, state.whoDidThis)
+                if(stateTemp1 == None):
+                    stateTemp1 = stateTemp
+
+                if(stateTemp1 != None and stateTemp1.board != state.board):
+                    states.append(stateTemp1)
 
         return states
 
-    def movesRight(self, state: State, row, column):
+    def movesRight(self, inputState: State, row, column, oppColor):
 
-        oppColor = state.whoDidThis
+        # check if it's not at the right
+        rowLen = len(inputState.board[row])
+        if(column + 1 >= rowLen):
+            return None
+
+        # get My color and the opponent color
         myColor = BLACKCELL if oppColor == WHITECELL else WHITECELL
 
+        # check if it has the oppColor at its right
+        if(inputState.board[row][column+1] != oppColor):
+            return None
+
+        # copy board to get the next state in a new object
+        state = State(inputState.board, myColor)
+
+        # change this cell with myColor
         state.board[row][column] = myColor
         column += 1
 
-        while((column < len(state.board[0])) and (state.board[row][column] == oppColor)):
+        # loop to right and change every cell to myColor
+        while(column < rowLen and state.board[row][column] == oppColor):
             state.board[row][column] = myColor
             column += 1
 
-        if((column < len(state.board[0])) and (state.board[row][column] == myColor)):
+        # check that there's another cell like me at the other side
+        if(column < rowLen and state.board[row][column] == myColor):
             return state
 
+        # if there's no cells like me return None
         return None
 
-    def movesLeft(self, state: State, row, column):
-        oppColor = state.whoDidThis
+    def movesLeft(self, inputState: State, row, column, oppColor):
+
+        # check if it's not at the left
+        if(column <= 0):
+            return None
+
+        # get My color and the opponent color
         myColor = BLACKCELL if oppColor == WHITECELL else WHITECELL
 
+        # check if it has the oppColor at its left
+        if(inputState.board[row][column-1] != oppColor):
+            return None
+
+        # copy board to get the next state in a new object
+        state = State(inputState.board, myColor)
+
+        # change this cell with myColor
         state.board[row][column] = myColor
         column -= 1
 
-        while((column >= 0) and (state.board[row][column] == oppColor)):
+        # loop to left and change every cell to myColor
+        while(column >= 0 and state.board[row][column] == oppColor):
             state.board[row][column] = myColor
             column -= 1
 
-        if((column >= 0) and (state.board[row][column] == myColor)):
+        # check that there's another cell like me at the other side
+        if(column >= 0 and state.board[row][column] == myColor):
             return state
 
+        # if there's no cells like me return None
         return None
 
-    def movesBottom(self, state: State, row, column):
+    def movesBottom(self, inputState: State, row, column, oppColor):
 
-        oppColor = state.whoDidThis
+        numOfRows = len(inputState.board)
+
+        # check if it's not at the bottom
+        if(row + 1 >= numOfRows):
+            return None
+
+        # get My color and the opponent color
         myColor = BLACKCELL if oppColor == WHITECELL else WHITECELL
 
+        # check if it has the oppColor under it
+        if(inputState.board[row+1][column] != oppColor):
+            return None
+
+        # copy board to get the next state in a new object
+        state = State(inputState.board, myColor)
+
+        # change this cell with myColor
         state.board[row][column] = myColor
         row += 1
 
-        while((row < len(state.board)) and (state.board[row][column] == oppColor)):
+        # loop to bottom and change every cell to myColor
+        while(row < numOfRows and state.board[row][column] == oppColor):
             state.board[row][column] = myColor
             row += 1
 
-        if((row < len(state.board)) and (state.board[row][column] == myColor)):
+        # check that there's another cell like me at the other side
+        if(row < numOfRows and state.board[row][column] == myColor):
             return state
 
+        # if there's no cells like me return None
         return None
 
-    def movesTop(self, state: State, row, column):
+    def movesTop(self, inputState: State, row, column, oppColor):
 
-        oppColor = state.whoDidThis
+        # check if it's not at the top
+        if(row <= 0):
+            return None
+
+        # get My color and the opponent color
         myColor = BLACKCELL if oppColor == WHITECELL else WHITECELL
 
+        # check if it has the oppColor above it
+        if(inputState.board[row-1][column] != oppColor):
+            return None
+
+        # copy board to get the next state in a new object
+        state = State(inputState.board, myColor)
+
+        # change this cell with myColor
         state.board[row][column] = myColor
         row -= 1
 
-        while((row >= 0) and (state.board[row][column] == oppColor)):
+        # loop to top and change every cell to myColor
+        while(row >= 0 and state.board[row][column] == oppColor):
             state.board[row][column] = myColor
             row -= 1
 
-        if((row >= 0) and (state.board[row][column] == myColor)):
+        # check that there's another cell like me at the other side
+        if(row >= 0 and state.board[row][column] == myColor):
             return state
 
+        # if there's no cells like me return None
         return None
 
-    def movesTopLeft(self, state: State, row, column):
+    def movesTopLeft(self, inputState: State, row, column, oppColor):
 
-        oppColor = state.whoDidThis
+        # check if it's not at the top left
+        if(row <= 0 or column <= 0):
+            return None
+
+        # get My color and the opponent color
         myColor = BLACKCELL if oppColor == WHITECELL else WHITECELL
 
+        # check if it has the oppColor at the top left
+        if(inputState.board[row-1][column-1] != oppColor):
+            return None
+
+        # copy board to get the next state in a new object
+        state = State(inputState.board, myColor)
+
+        # change this cell with myColor
         state.board[row][column] = myColor
         row -= 1
         column -= 1
 
-        while((row >= 0) and (column >= 0) and(state.board[row][column] == oppColor)):
+        # loop to top left and change every cell to myColor
+        while(row >= 0 and column >= 0 and state.board[row][column] == oppColor):
             state.board[row][column] = myColor
             row -= 1
             column -= 1
 
-        if((row >= 0)and (column >= 0) and (state.board[row][column] == myColor)):
+        # check that there's another cell like me at the other side
+        if(row >= 0 and column >= 0 and state.board[row][column] == myColor):
             return state
 
+        # if there's no cells like me return None
         return None
 
-    def movesTopRight(self, state: State, row, column):
+    def movesTopRight(self, inputState: State, row, column, oppColor):
 
-        oppColor = state.whoDidThis
+        rowLen = len(inputState.board[row])
+
+        # check if it's not at the top right
+        if(row <= 0 or column + 1 >= rowLen):
+            return None
+
+        # get My color and the opponent color
         myColor = BLACKCELL if oppColor == WHITECELL else WHITECELL
 
+        # check if it has the oppColor at the top right
+        if(inputState.board[row-1][column+1] != oppColor):
+            return None
+
+        # copy board to get the next state in a new object
+        state = State(inputState.board, myColor)
+
+        # change this cell with myColor
         state.board[row][column] = myColor
         row -= 1
         column += 1
 
-        while((row >= 0) and (column < len(state.board[0])) and(state.board[row][column] == oppColor)):
+        # loop to top right and change every cell to myColor
+        while(row >= 0 and column < rowLen and state.board[row][column] == oppColor):
             state.board[row][column] = myColor
             row -= 1
             column += 1
 
-        if((row >= 0)and (column < len(state.board[0])) and (state.board[row][column] == myColor)):
+        # check that there's another cell like me at the other side
+        if(row >= 0 and column < rowLen and state.board[row][column] == myColor):
             return state
 
+        # if there's no cells like me return None
         return None
 
-    def movesBottomLeft(self, state: State, row, column):
+    def movesBottomLeft(self, inputState: State, row, column, oppColor):
 
-        oppColor = state.whoDidThis
+        numOfRows = len(inputState.board)
+
+        # check if it's not at the bottom left
+        if(row + 1 >= numOfRows or column <= 0):
+            return None
+
+        # get My color and the opponent color
         myColor = BLACKCELL if oppColor == WHITECELL else WHITECELL
 
+        # check if it has the oppColor at the bottom left
+        if(inputState.board[row+1][column-1] != oppColor):
+            return None
+
+        # copy board to get the next state in a new object
+        state = State(inputState.board, myColor)
+
+        # change this cell with myColor
         state.board[row][column] = myColor
         row += 1
         column -= 1
 
-        while((row < len(state.board)) and (column >= 0) and(state.board[row][column] == oppColor)):
+        # loop to bottom left and change every cell to myColor
+        while(row < numOfRows and column >= 0 and state.board[row][column] == oppColor):
             state.board[row][column] = myColor
             row += 1
             column -= 1
 
-        if((row < len(state.board))and (column >= 0) and (state.board[row][column] == myColor)):
+        # check that there's another cell like me at the other side
+        if(row < numOfRows and column >= 0 and state.board[row][column] == myColor):
             return state
 
+        # if there's no cells like me return None
         return None
 
-    def movesBottomRight(self, state: State, row, column):
+    def movesBottomRight(self, inputState: State, row, column, oppColor):
+        rowLen = len(inputState.board[row])
+        numOfRows = len(inputState.board)
 
-        oppColor = state.whoDidThis
+        # check if it's not at the bottom right
+        if(row + 1 >= numOfRows or column+1 >= rowLen):
+            return None
+
+        # get My color and the opponent color
         myColor = BLACKCELL if oppColor == WHITECELL else WHITECELL
 
+        # check if it has the oppColor at the bottom right
+        if(inputState.board[row+1][column+1] != oppColor):
+            return None
+
+        # copy board to get the next state in a new object
+        state = State(inputState.board, myColor)
+
+        # change this cell with myColor
         state.board[row][column] = myColor
         row += 1
         column += 1
 
-        while((row < len(state.board)) and (column < len(state.board[0])) and(state.board[row][column] == oppColor)):
+        # loop to bottom right and change every cell to myColor
+        while(row < numOfRows and column < rowLen and state.board[row][column] == oppColor):
             state.board[row][column] = myColor
             row += 1
             column += 1
 
-        if((row < len(state.board))and (column < len(state.board[0])) and (state.board[row][column] == myColor)):
+        # check that there's another cell like me at the other side
+        if(row < numOfRows and column < rowLen and state.board[row][column] == myColor):
             return state
 
+        # if there's no cells like me return None
         return None
 
 
-state = State([
-    [EMPTYCELL, EMPTYCELL, EMPTYCELL, EMPTYCELL],
-    [EMPTYCELL, BLACKCELL, WHITECELL, EMPTYCELL],
-    [EMPTYCELL, WHITECELL, BLACKCELL, EMPTYCELL],
-    [EMPTYCELL, BLACKCELL, EMPTYCELL, EMPTYCELL]
-], BLACKCELL)
+state = State(
+    [
+        [BLACKCELL, WHITECELL, BLACKCELL, BLACKCELL, BLACKCELL, WHITECELL, BLACKCELL],
+        [BLACKCELL, WHITECELL, BLACKCELL, WHITECELL, BLACKCELL, WHITECELL, BLACKCELL],
+        [BLACKCELL, WHITECELL, WHITECELL, WHITECELL, WHITECELL, EMPTYCELL, BLACKCELL],
+        [BLACKCELL, WHITECELL, WHITECELL, EMPTYCELL, WHITECELL, WHITECELL, BLACKCELL],
+        [BLACKCELL, WHITECELL, WHITECELL, WHITECELL, WHITECELL, WHITECELL, BLACKCELL],
+        [BLACKCELL, WHITECELL, EMPTYCELL, WHITECELL, BLACKCELL, WHITECELL, BLACKCELL],
+        [BLACKCELL, WHITECELL, BLACKCELL, BLACKCELL, BLACKCELL, WHITECELL, BLACKCELL],
+    ], WHITECELL)
 
-print(state.board)
+print(f"Input: ")
+for row in state.board:
+    print(row)
+print("\n")
+
 movesGenerator = MovesGenerator()
-print(movesGenerator.getNextStates(state)[0].board)
+
+for s in movesGenerator.getNextStates(state):
+    print(f"Next State: ")
+    for row in s.board:
+        print(row)
+    print("\n")
