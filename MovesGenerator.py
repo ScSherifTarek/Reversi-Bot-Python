@@ -340,28 +340,3 @@ class MovesGenerator:
 
         # if there's no cells like me return None
         return None
-
-
-state = State(
-    [
-        [BLACKCELL, WHITECELL, BLACKCELL, BLACKCELL, BLACKCELL, WHITECELL, BLACKCELL],
-        [BLACKCELL, WHITECELL, BLACKCELL, WHITECELL, BLACKCELL, WHITECELL, BLACKCELL],
-        [BLACKCELL, WHITECELL, WHITECELL, WHITECELL, WHITECELL, EMPTYCELL, BLACKCELL],
-        [BLACKCELL, WHITECELL, WHITECELL, EMPTYCELL, WHITECELL, WHITECELL, BLACKCELL],
-        [BLACKCELL, WHITECELL, WHITECELL, WHITECELL, WHITECELL, WHITECELL, BLACKCELL],
-        [BLACKCELL, WHITECELL, EMPTYCELL, WHITECELL, BLACKCELL, WHITECELL, BLACKCELL],
-        [BLACKCELL, WHITECELL, BLACKCELL, BLACKCELL, BLACKCELL, WHITECELL, BLACKCELL],
-    ], WHITECELL)
-
-print(f"Input: ")
-for row in state.board:
-    print(row)
-print("\n")
-
-movesGenerator = MovesGenerator()
-
-for s in movesGenerator.getNextStates(state):
-    print(f"Next State: ")
-    for row in s.board:
-        print(row)
-    print("\n")
