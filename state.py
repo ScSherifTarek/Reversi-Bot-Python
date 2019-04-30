@@ -9,7 +9,6 @@ class State:
         for row in board:
             self.board.append(list(row))
         self.whoDidThis = whoDidThis
-        self.id = self.generateID()
 
     def generateID(self):
-        return 0
+        self.id = 0

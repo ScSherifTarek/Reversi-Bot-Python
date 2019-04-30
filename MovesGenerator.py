@@ -62,6 +62,7 @@ class MovesGenerator:
                 if(stateTemp1 == None):
                     stateTemp1 = stateTemp
 
+                # append the next state
                 if(stateTemp1 != None and stateTemp1.board != state.board):
                     states.append(stateTemp1)
 
