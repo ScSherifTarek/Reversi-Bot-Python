@@ -8,19 +8,40 @@ class MovesGenerator:
     def getNextStates(self, state):
         states = []
         r = -1
+
+        # we work on the empty cell we move from the empty cells and check if we can go through it
+        # to right or to left or up or bottom or either the way is
         for row in state.board:
             r += 1
             c = -1
             for cell in row:
                 c += 1
+
+                if(cell != EMPTYCELL):
+                    continue
+
+                # to right
                 stateTemp = self.movesRight(state, r, c)
                 if(stateTemp != None):
                     states.append(stateTemp)
+
+                # to left
+
+                # to bottom
+
+                # to top
+
+                # to top left
+
+                # to top right
+
+                # to bottom left
+
+                # to bottom right
+
         return states
 
     def movesRight(self, state: State, row, column):
-        if(state.board[row][column] != EMPTYCELL):
-            return None
 
         oppColor = state.whoDidThis
         myColor = BLACKCELL if oppColor == WHITECELL else WHITECELL
