@@ -36,34 +36,39 @@ class MovesGenerator:
                 if(stateTemp == None):
                     stateTemp = stateTemp1
 
-
                 # to top
                 stateTemp1 = self.movesTop(stateTemp, r, c, state.whoDidThis)
                 if(stateTemp1 == None):
                     stateTemp1 = stateTemp
 
                 # to top left
-                stateTemp = self.movesTopLeft(stateTemp1, r, c, state.whoDidThis)
+                stateTemp = self.movesTopLeft(
+                    stateTemp1, r, c, state.whoDidThis)
                 if(stateTemp == None):
                     stateTemp = stateTemp1
 
                 # to top right
-                stateTemp1 = self.movesTopRight(stateTemp, r, c, state.whoDidThis)
+                stateTemp1 = self.movesTopRight(
+                    stateTemp, r, c, state.whoDidThis)
                 if(stateTemp1 == None):
                     stateTemp1 = stateTemp
 
                 # to bottom left
-                stateTemp = self.movesBottomLeft(stateTemp1, r, c, state.whoDidThis)
+                stateTemp = self.movesBottomLeft(
+                    stateTemp1, r, c, state.whoDidThis)
                 if(stateTemp == None):
                     stateTemp = stateTemp1
 
                 # to bottom right
-                stateTemp1 = self.movesBottomRight(stateTemp, r, c, state.whoDidThis)
+                stateTemp1 = self.movesBottomRight(
+                    stateTemp, r, c, state.whoDidThis)
                 if(stateTemp1 == None):
                     stateTemp1 = stateTemp
 
                 # append the next state
                 if(stateTemp1 != None and stateTemp1.board != state.board):
+                    stateTemp1.x = r
+                    stateTemp1.y = c
                     states.append(stateTemp1)
 
         return states
