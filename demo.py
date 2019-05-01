@@ -9,25 +9,25 @@ from StateEvaluator import evaluate
 
 state = State(
     [
-        [BLACKCELL, BLACKCELL, BLACKCELL, BLACKCELL,
-            BLACKCELL, BLACKCELL, BLACKCELL, BLACKCELL],
-        [BLACKCELL, BLACKCELL, EMPTYCELL, BLACKCELL,
-            BLACKCELL, BLACKCELL, BLACKCELL, BLACKCELL],
-        [BLACKCELL, BLACKCELL, EMPTYCELL, EMPTYCELL,
-            BLACKCELL, BLACKCELL, BLACKCELL, EMPTYCELL],
-        [BLACKCELL, EMPTYCELL, BLACKCELL, BLACKCELL,
-            BLACKCELL, BLACKCELL, BLACKCELL, BLACKCELL],
-        [BLACKCELL, BLACKCELL, BLACKCELL, BLACKCELL,
-            BLACKCELL, BLACKCELL, BLACKCELL, BLACKCELL],
-        [BLACKCELL, EMPTYCELL, WHITECELL, BLACKCELL,
-            BLACKCELL, BLACKCELL, WHITECELL, BLACKCELL],
-        [BLACKCELL, BLACKCELL, BLACKCELL, WHITECELL,
-            BLACKCELL, BLACKCELL, BLACKCELL, BLACKCELL],
-        [BLACKCELL, BLACKCELL, EMPTYCELL, BLACKCELL,
-            BLACKCELL, BLACKCELL, BLACKCELL, EMPTYCELL],
+        [BLACKCELL, WHITECELL, BLACKCELL, BLACKCELL,
+            BLACKCELL, WHITECELL, BLACKCELL, BLACKCELL],
+        [BLACKCELL, WHITECELL, BLACKCELL, WHITECELL,
+            BLACKCELL, WHITECELL, BLACKCELL, BLACKCELL],
+        [BLACKCELL, WHITECELL, WHITECELL, WHITECELL,
+            WHITECELL, EMPTYCELL, BLACKCELL, BLACKCELL],
+        [BLACKCELL, WHITECELL, WHITECELL, EMPTYCELL,
+            WHITECELL, WHITECELL, BLACKCELL, BLACKCELL],
+        [BLACKCELL, WHITECELL, WHITECELL, WHITECELL,
+            WHITECELL, WHITECELL, BLACKCELL, BLACKCELL],
+        [BLACKCELL, WHITECELL, EMPTYCELL, WHITECELL,
+            BLACKCELL, WHITECELL, BLACKCELL, BLACKCELL],
+        [BLACKCELL, WHITECELL, BLACKCELL, BLACKCELL,
+            BLACKCELL, WHITECELL, BLACKCELL, BLACKCELL],
+        [BLACKCELL, WHITECELL, BLACKCELL, BLACKCELL,
+            BLACKCELL, WHITECELL, BLACKCELL, BLACKCELL],
     ], WHITECELL)
 
-print(f"Initial State: ")
+print(f"Input: ")
 print("x: " + str(state.x) + " , Y: " + str(state.y))
 for row in state.board:
     print(row)
@@ -41,7 +41,7 @@ while(input("To go to the next one press any key to exit write e") != 'e'):
             f"Player didn't have a play")
         continue
     print(
-        f"Player {s[0].whoDidThis} played as he estimates to get {s[1]} more points at the end:  ")
+        f"Player {s[0].whoDidThis} played as he estimates to get {-s[1]} more points at the end:  ")
     print("x: " + str(s[0].x) + " , Y: " + str(s[0].y))
     for row in s[0].board:
         print(row)
@@ -50,16 +50,3 @@ while(input("To go to the next one press any key to exit write e") != 'e'):
         print(f"Game Finished player 1 get {evaluate(s[0])}")
         print(f"Game Finished player 2 get {evaluate(s[0],BLACKCELL)}")
         break
-
-# print(f"Next State: ")
-# print("x: " + str(s[0].x) + " , Y: " + str(s[0].y))
-# for row in s[0].board:
-#     print(row)
-# print("\n")
-
-# s = minimax(s[0])
-# print(f"Next State: ")
-# print("x: " + str(s[0].x) + " , Y: " + str(s[0].y))
-# for row in s[0].board:
-#     print(row)
-# print("\n")
