@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/ReversiBotPython.iml" filepath="$PROJECT_DIR$/.idea/ReversiBotPython.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Reversi game bot.iml" filepath="$PROJECT_DIR$/.idea/Reversi game bot.iml" />
     </modules>
   </component>
 </project>
