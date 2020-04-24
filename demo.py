@@ -4,6 +4,7 @@ from config import WHITECELL
 from state import State
 from MovesGenerator import MovesGenerator
 from MinimaxAlgorithm import minimax
+
 from StateEvaluator import is_gameover
 from StateEvaluator import evaluate
 

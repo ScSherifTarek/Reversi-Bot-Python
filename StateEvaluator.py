@@ -5,6 +5,7 @@ from state import State
 from MovesGenerator import MovesGenerator
 
 
+
 def is_gameover(state):
     obj = MovesGenerator()
     is_over = True
@@ -16,6 +17,7 @@ def is_gameover(state):
 
 
 def evaluate(state, oppColor=WHITECELL):
+
     white_Counter = 0
     black_Counter = 0
     for row in state.board:
@@ -29,3 +31,4 @@ def evaluate(state, oppColor=WHITECELL):
         return black_Counter - white_Counter
     else:
         return white_Counter - black_Counter
+

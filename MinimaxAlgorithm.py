@@ -5,6 +5,7 @@ from state import State
 from MovesGenerator import MovesGenerator
 from StateEvaluator import is_gameover
 from StateEvaluator import evaluate
+
 obj = MovesGenerator()
 limit = 5
 

@@ -2,7 +2,6 @@ from config import EMPTYCELL
 from config import BLACKCELL
 from config import WHITECELL
 
-
 class State:
     def __init__(self, board, whoDidThis):
         self.board = []
@@ -13,6 +12,7 @@ class State:
         self.y = -1
 
     def reverse_State(self):
+
         self.whoDidThis = BLACKCELL if self.whoDidThis == WHITECELL else WHITECELL
 
     def generateID(self):
@@ -22,3 +22,4 @@ class State:
                 tempId += col
         self.id = tempId
         return self.id
+
