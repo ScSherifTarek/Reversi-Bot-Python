@@ -12,12 +12,14 @@ class State:
         self.y = -1
 
     def reverse_State(self):
-        self.whoDidThis=BLACKCELL if self.whoDidThis==WHITECELL else WHITECELL
+
+        self.whoDidThis = BLACKCELL if self.whoDidThis == WHITECELL else WHITECELL
 
     def generateID(self):
-        tempId=""
+        tempId = "" + self.whoDidThis
         for row in board:
             for col in row:
-                tempId+=col
-        self.id=tempId
-        return (self.id,self.whoDidThis)
+                tempId += col
+        self.id = tempId
+        return self.id
+
